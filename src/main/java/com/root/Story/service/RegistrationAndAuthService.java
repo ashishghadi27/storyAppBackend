@@ -22,8 +22,19 @@ public class RegistrationAndAuthService {
 		return new ResponseEntity<BaseResponseTemplate>(dao.startRegistration(user), HttpStatus.OK);
 	}
 	
+	@Transactional
 	public ResponseEntity<BaseResponseTemplate> login(String email, String password){
 		return new ResponseEntity<BaseResponseTemplate>(dao.authenticate(email, password), HttpStatus.OK);
 	}
 	
+	@Transactional
+	public ResponseEntity<BaseResponseTemplate> getOtp(String email){
+		return new ResponseEntity<BaseResponseTemplate>(dao.getOtp(email), HttpStatus.OK);
+	}
+	
+	@Transactional
+	public ResponseEntity<BaseResponseTemplate> updatePass(String email, String password){
+		return new ResponseEntity<BaseResponseTemplate>(dao.updatePass(email, password), HttpStatus.OK);
+	}
+		
 }

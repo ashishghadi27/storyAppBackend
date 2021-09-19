@@ -162,7 +162,7 @@ public class AdminOperationsDao {
 	public BaseResponseTemplate deleteAssignmentSet(int setId) {
 		BaseResponseTemplate template;
 		Session session = factory.getCurrentSession();
-		String query = "delete from mcqSets where setID = '%d'";
+		String query = "delete from assignSets where setID = '%d'";
 		query = String.format(query, setId);
 		try {
 			NativeQuery<AssignmentSet> q = session.createSQLQuery(query);
@@ -179,7 +179,7 @@ public class AdminOperationsDao {
 	public BaseResponseTemplate deleteMCQ(int mcqId) {
 		BaseResponseTemplate template;
 		Session session = factory.getCurrentSession();
-		String query = "delete from mcq where quesId = '%d'";
+		String query = "delete from mcqs where quesId = '%d'";
 		query = String.format(query, mcqId);
 		try {
 			NativeQuery<MCQModel> q = session.createSQLQuery(query);
@@ -196,7 +196,7 @@ public class AdminOperationsDao {
 	public BaseResponseTemplate deleteAssignment(int quesId) {
 		BaseResponseTemplate template;
 		Session session = factory.getCurrentSession();
-		String query = "delete from mcq where quesId = '%d'";
+		String query = "delete from assignments where quesId = '%d'";
 		query = String.format(query, quesId);
 		try {
 			NativeQuery<AssignmentQts> q = session.createSQLQuery(query);

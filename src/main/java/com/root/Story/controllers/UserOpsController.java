@@ -36,7 +36,7 @@ public class UserOpsController {
 		return service.saveMCQSetMarks(marks);
 	}
 	
-	@PostMapping("/saveMCQSetMarks")
+	@PostMapping("/saveAssignmentSetMarks")
 	public ResponseEntity<BaseResponseTemplate> saveAssignmentSetMarks(@RequestBody AssignmentMarks marks){
 		return service.saveAssignmentSetMarks(marks);
 	}

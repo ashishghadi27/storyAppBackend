@@ -48,7 +48,7 @@ public class AppConfig {
 		hProperties.put("hibernate.format_sql", val);
 		hProperties.put("hibernate.use_sql_comments", val);
 		hProperties.put("hibernate.hbm2ddl.auto", "update");
-		hProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQLInnoDBDialect");
+		hProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
 		return hProperties;
 	}
 
