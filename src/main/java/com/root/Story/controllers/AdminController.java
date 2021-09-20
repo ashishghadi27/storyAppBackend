@@ -3,6 +3,7 @@ package com.root.Story.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -85,6 +86,16 @@ public class AdminController {
 	@DeleteMapping("/deleteAssignmentQts")
 	public ResponseEntity<BaseResponseTemplate> deleteAssignmentQts(@RequestParam("quesId") Integer quesId) {
 		return service.deleteAssignmentQts(quesId);
+	}
+	
+	@GetMapping("/allUsers")
+	public ResponseEntity<BaseResponseTemplate> getAllUsers() {
+		return service.getAllUsers();
+	}
+	
+	@GetMapping("/getMCQSetsByUser")
+	public ResponseEntity<BaseResponseTemplate> getMCQSetsByUser(@RequestParam("userId") String userId) {
+		return service.getMCQSetsByUser(userId);
 	}
 	
 }

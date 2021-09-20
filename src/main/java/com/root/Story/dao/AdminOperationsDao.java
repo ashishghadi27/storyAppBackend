@@ -1,5 +1,8 @@
 package com.root.Story.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,6 +16,8 @@ import com.root.Story.models.Categories;
 import com.root.Story.models.MCQModel;
 import com.root.Story.models.MCQSet;
 import com.root.Story.models.Story;
+import com.root.Story.models.User;
+import com.root.Story.models.UsersScoreOfEachSet;
 import com.root.Story.responseTemplates.BaseResponseTemplate;
 
 @Repository
@@ -202,6 +207,58 @@ public class AdminOperationsDao {
 			NativeQuery<AssignmentQts> q = session.createSQLQuery(query);
 			q.executeUpdate();
 			template = new BaseResponseTemplate(HttpStatus.OK, "Success", null);
+		}
+		catch(Exception e) {
+			template = new BaseResponseTemplate(HttpStatus.OK, "Error : " + e.getCause(), null);
+		}
+		return template;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public BaseResponseTemplate getAllUsers() {
+		BaseResponseTemplate template;
+		Session session = factory.getCurrentSession();
+		String query = "select * from users where isAdmin = 0";
+		try {
+			NativeQuery<User> q = session.createSQLQuery(query);
+			q.addEntity(User.class);
+			List<User> list = q.getResultList(); 
+			template = new BaseResponseTemplate(HttpStatus.OK, "Success", list);
+		}
+		catch(Exception e) {
+			template = new BaseResponseTemplate(HttpStatus.OK, "Error : " + e.getCause(), null);
+		}
+		return template;
+	}
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public BaseResponseTemplate getMCQSetsByUser(String userId) {
+		BaseResponseTemplate template;
+		Session session = factory.getCurrentSession();
+		String query = "select ms.storyId, s.storyName, ms.setId, ms.setName, sum(m.marks) as marks "
+				+ "from mcqSets ms, mcqAnswers ma, stories s, mcqs m "
+				+ "where ma.userId = '%s' "
+				+ "and ms.setId = ma.setId "
+				+ "and ms.setId = m.setId "
+				+ "and trim(lower(ma.answer)) = trim(lower(m.quesAns)) "
+				+ "and ms.storyId = s.storyId order by ms.setId;";
+		query = String.format(query, userId);
+		try {
+			NativeQuery q = session.createSQLQuery(query);
+			List<Object[]> rows = q.getResultList();
+			System.out.println("here");
+			List<UsersScoreOfEachSet> list = new ArrayList<UsersScoreOfEachSet>();
+			//System.out.println("1:" + list.get(0).getStoryName());
+			for(Object[] row : rows) {
+				UsersScoreOfEachSet scoreSet = new UsersScoreOfEachSet();
+				scoreSet.setStoryId(row[0].toString());
+				scoreSet.setStoryName(row[1].toString());
+				scoreSet.setSetId(row[2].toString());
+				scoreSet.setSetName(row[3].toString());
+				scoreSet.setMarks(row[4].toString());
+				list.add(scoreSet);
+			}
+			template = new BaseResponseTemplate(HttpStatus.OK, "Success", list);
 		}
 		catch(Exception e) {
 			template = new BaseResponseTemplate(HttpStatus.OK, "Error : " + e.getCause(), null);

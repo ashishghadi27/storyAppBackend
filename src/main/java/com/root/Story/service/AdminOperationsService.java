@@ -82,4 +82,14 @@ public class AdminOperationsService {
 		return new ResponseEntity<BaseResponseTemplate>(dao.deleteAssignment(quesId), HttpStatus.OK);
 	}
 	
+	@Transactional
+	public ResponseEntity<BaseResponseTemplate> getAllUsers() {
+		return new ResponseEntity<BaseResponseTemplate>(dao.getAllUsers(), HttpStatus.OK);
+	}
+	
+	@Transactional
+	public ResponseEntity<BaseResponseTemplate> getMCQSetsByUser(String userId) {
+		return new ResponseEntity<BaseResponseTemplate>(dao.getMCQSetsByUser(userId), HttpStatus.OK);
+	}
+	
 }
