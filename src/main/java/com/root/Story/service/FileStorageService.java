@@ -49,7 +49,7 @@ public class FileStorageService {
 			}
 			Path targetLocation = this.fileStorageLocation.resolve(fileName);
 			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/story/getFeaturedImage/").path(fileName).toUriString();
+			String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/story/video/").path(fileName).toUriString();
 			return new ResponseEntity<BaseResponseTemplate>(new BaseResponseTemplate(HttpStatus.OK, "File Uploaded",
 					new RestUploadFileResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize())), HttpStatus.OK);
 		} catch (IOException ex) {

@@ -66,7 +66,7 @@ public class StoryController {
         return fileStorageService.storeFile(file);
     }
 	
-	@GetMapping("/getFeaturedImage/{fileName:.+}")
+	@GetMapping("/video/{fileName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request) {
         
         Resource resource = fileStorageService.loadFileAsResource(fileName);
